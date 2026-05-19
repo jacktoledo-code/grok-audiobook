@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Grok Audiobook Maker</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <h1>Grok Audiobook Maker</h1>
+    <p class="tagline">
+      Turn TXT, Markdown, or EPUB books into natural-sounding audiobooks with xAI Grok TTS.
+      Drop one file or many — each book becomes its own audiobook.
+    </p>
+    <p class="breadcrumb"><a href="/speak.html">Quick speak →</a></p>
+  </header>
+
+  <main>
+    <section class="card" id="step-upload">
+      <h2>1. Pick your books</h2>
+      <label id="dropzone" class="dropzone" for="file-input">
+        <input id="file-input" type="file" accept=".txt,.md,.markdown,.epub" multiple hidden />
+        <span class="dropzone-text">
+          <strong>Drag &amp; drop</strong> one or more <code>.txt</code>, <code>.md</code>, or <code>.epub</code> files, or
+          <span class="link">click to browse</span>.
+        </span>
+        <span class="dropzone-sub" id="dz-hint">Up to 10 MB per file</span>
+      </label>
+
+      <div class="row">
+        <label>
+          Voice
+          <select id="voice-select">
+            <option value="ara" selected>ara — warm, natural (recommended)</option>
+            <option value="eve">eve</option>
+            <option value="rex">rex</option>
+            <option value="sal">sal</option>
+            <option value="leo">leo</option>
+          </select>
+        </label>
+        <label>
+          Language
+          <select id="language-select">
+            <option value="pt-BR" selected>Portuguese (Brazil) — pt-BR</option>
+            <option value="pt-PT">Portuguese (Portugal) — pt-PT</option>
+            <option value="en-US">English (US) — en-US</option>
+            <option value="en-GB">English (UK) — en-GB</option>
+            <option value="es-ES">Spanish (Spain) — es-ES</option>
+            <option value="es-MX">Spanish (Mexico) — es-MX</option>
+            <option value="fr-FR">French — fr-FR</option>
+            <option value="de-DE">German — de-DE</option>
+            <option value="it-IT">Italian — it-IT</option>
+            <option value="ja-JP">Japanese — ja-JP</option>
+          </select>
+        </label>
+        <fieldset class="mode">
+          <legend>Mode</legend>
+          <label><input type="radio" name="mode" value="chapter" checked /> Chapter-by-chapter</label>
+          <label><input type="radio" name="mode" value="single" /> Single file</label>
+        </fieldset>
+      </div>
+
+      <p class="hint">Nothing is sent to Grok until you click <em>Start all</em>.</p>
+    </section>
+
+    <section class="card hidden" id="step-batch">
+      <div class="batch-header">
+        <h2>2. Batch</h2>
+        <div class="batch-totals">
+          <span><strong id="total-files">0</strong> file(s)</span>
+          <span>·</span>
+          <span>est. <strong id="total-cost">$0.0000</strong></span>
+          <span>·</span>
+          <span>spent <strong id="total-spent">$0.0000</strong></span>
+        </div>
+      </div>
+      <div class="batch-controls">
+        <button id="btn-estimate-all" class="primary" disabled>Estimate all</button>
+        <button id="btn-start-all" class="primary" disabled>Start all</button>
+        <button id="btn-clear" class="secondary">Clear</button>
+      </div>
+      <div id="book-grid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <small>
+      Powered by <a href="https://x.ai/">xAI Grok TTS</a>. Billing ~$4.20 per 1M chars.
+    </small>
+  </footer>
+
+  <template id="book-card-template">
+    <article class="book-card" data-status="idle">
+      <header class="book-card-head">
+        <div class="book-card-title">
+          <strong class="bc-filename"></strong>
+          <span class="bc-filesize"></span>
+        </div>
+        <span class="pill bc-pill">idle</span>
+        <button class="bc-remove" title="Remove">×</button>
+      </header>
+      <dl class="bc-meta">
+        <dt>Title</dt><dd class="bc-title">—</dd>
+        <dt>Chapters</dt><dd class="bc-chapters">—</dd>
+        <dt>Chars</dt><dd class="bc-chars">—</dd>
+        <dt>Est.</dt><dd class="bc-est">—</dd>
+      </dl>
+      <div class="progress"><div class="progress-bar bc-bar"></div></div>
+      <ul class="bc-stats">
+        <li>Chapter: <strong class="bc-cur">—</strong></li>
+        <li>Done: <strong class="bc-done">0</strong>/<strong class="bc-total">0</strong></li>
+        <li>Cost: <strong class="bc-cost">$0.0000</strong></li>
+        <li>ETA: <strong class="bc-eta">—</strong></li>
+      </ul>
+      <details class="bc-log-wrap">
+        <summary>Log</summary>
+        <pre class="bc-log"></pre>
+      </details>
+      <div class="bc-downloads hidden">
+        <a class="primary bc-dl-full" href="#" download>Download MP3</a>
+        <details>
+          <summary>Chapters</summary>
+          <ul class="bc-dl-chapters"></ul>
+        </details>
+      </div>
+      <p class="bc-error hidden"></p>
+    </article>
+  </template>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

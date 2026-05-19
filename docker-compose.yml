@@ -1,0 +1,14 @@
+services:
+  audiobook:
+    build: ./backend
+    container_name: grok-audiobook
+    ports:
+      - "8000:8000"
+    environment:
+      XAI_API_KEY: ${XAI_API_KEY}
+      GROK_TTS_URL: ${GROK_TTS_URL:-https://api.x.ai/v1/tts}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-}
+      MAX_UPLOAD_MB: ${MAX_UPLOAD_MB:-10}
+    volumes:
+      - ./outputs:/app/outputs
+    restart: unless-stopped

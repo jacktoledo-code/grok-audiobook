@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quick Speak — Grok Audiobook Maker</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <p class="breadcrumb"><a href="/">← back to books</a></p>
+    <h1>Quick Speak</h1>
+    <p class="tagline">
+      Paste a paragraph, hear it out loud. Great for testing voices, drafting
+      messages, or trying speech tags like <code>[pause]</code> and
+      <code>&lt;whisper&gt;…&lt;/whisper&gt;</code>.
+    </p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Type or paste text</h2>
+      <textarea
+        id="speak-text"
+        maxlength="15000"
+        placeholder="Olá! Isto é um teste rápido. [pause] Funciona?"
+        rows="10"
+      ></textarea>
+      <div class="speak-meter">
+        <span><strong id="speak-count">0</strong> / 15,000 chars</span>
+        <span>·</span>
+        <span>est <strong id="speak-cost">$0.0000</strong></span>
+      </div>
+
+      <div class="row">
+        <label>
+          Voice
+          <select id="voice-select">
+            <option value="ara" selected>ara — warm, natural (recommended)</option>
+            <option value="eve">eve</option>
+            <option value="rex">rex</option>
+            <option value="sal">sal</option>
+            <option value="leo">leo</option>
+          </select>
+        </label>
+        <label>
+          Language
+          <select id="language-select">
+            <option value="pt-BR" selected>Portuguese (Brazil) — pt-BR</option>
+            <option value="pt-PT">Portuguese (Portugal) — pt-PT</option>
+            <option value="en-US">English (US) — en-US</option>
+            <option value="en-GB">English (UK) — en-GB</option>
+            <option value="es-ES">Spanish (Spain) — es-ES</option>
+            <option value="es-MX">Spanish (Mexico) — es-MX</option>
+            <option value="fr-FR">French — fr-FR</option>
+            <option value="de-DE">German — de-DE</option>
+            <option value="it-IT">Italian — it-IT</option>
+            <option value="ja-JP">Japanese — ja-JP</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="speak-controls">
+        <button id="btn-speak" class="primary" disabled>Speak</button>
+        <span id="speak-status" class="hint"></span>
+      </div>
+
+      <div class="speak-result hidden" id="speak-result">
+        <audio id="speak-player" controls></audio>
+        <a class="primary" id="speak-download" href="#" download="speech.mp3">
+          Download MP3
+        </a>
+      </div>
+
+      <p class="bc-error hidden" id="speak-error"></p>
+    </section>
+  </main>
+
+  <footer>
+    <small>
+      Powered by <a href="https://x.ai/">xAI Grok TTS</a>. Billing ~$4.20 per 1M chars.
+    </small>
+  </footer>
+
+  <script type="module" src="/speak.js"></script>
+</body>
+</html>
